@@ -1,15 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cors = require('cors');
 
-const routes = require('./routes/routes');
+const noticia = require('./routes/noticia');
+const user = require('./routes/user');
 
-const server = express();
+const app = express();
 
-mongoose.connect('mongodb+srv://admin:news@21@noticias.t2n4y.mongodb.net/noticias?retryWrites=true&w=majority', {
-   useNewUrlParser: true,
-});
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-server.use(express.json());
-server.use(routes);
+app.use(noticia);
+app.use(user);
 
-server.listen(5555);
+app.listen(process.env.PORT || 5555);

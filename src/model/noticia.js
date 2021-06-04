@@ -1,12 +1,31 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require("../database/mongo");
 
-const NoticiaSchema = new Schema({
-    user: {
-        type: String,
+const Noticia = new mongoose.Schema(
+  {
+    data: {
+      type: String,
+      trim: true,
     },
+    titulo: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    conteudo: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    link: {
+      type: String,
+      trim: true,
+    },
+  },
+  {
+    versionKey: false,
+  }
+);
 
-}, {
-    timestamps: true,
-});
+const noticiaSchema = mongoose.model("Noticia", Noticia);
 
-module.exports = model('Noticia', NoticiaSchema);
+module.exports = noticiaSchema;
